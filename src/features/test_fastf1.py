@@ -1,13 +1,20 @@
 import sys
 import fastf1
+from fastf1.core import DataNotLoadedError
 
 def test_fastf1_session(year, gp_name):
     session = fastf1.get_session(year, gp_name, 'R')
-    session.load()
-    print(f"✅ Loaded {gp_name} {year} Race")
-    print("Drivers:", [drv for drv in session.drivers])
-    print("Results head:")
-    print(session.results.head())
+    try:
+        session.load()
+        print(f"✅ Loaded {gp_name} {year} Race")
+        print("Drivers:", [drv for drv in session.drivers])
+        try:
+            print("Results head:")
+            print(session.results.head())
+        except DataNotLoadedError:
+            print("⚠️ Results not available for this race.")
+    except DataNotLoadedError:
+        print(f"⚠️ Failed to load {gp_name} {year}: Data not available.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
