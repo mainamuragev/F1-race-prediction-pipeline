@@ -1,45 +1,43 @@
 import pandas as pd
-import numpy as np
-import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
+import joblib
 
-def main():
-    df = pd.read_csv("data/processed/features.csv")
+def train_model(input_csv="data/processed/features_multiseason.csv",
+                model_out="artifacts/f1_predictor.pkl"):
+    df = pd.read_csv(input_csv)
 
-    features = [
-        "driver_form_last5",
-        "constructor_form_last5",
-        "grid_form_last5",
-        "pit_form_last5",
-        "lap_consistency_last5"
-    ]
+    features = ["driver_form_last3", "constructor_form_last3", "grid_advantage"]
+
+    # Convert Points to numeric, drop rows without valid values
+    df["Points"] = pd.to_numeric(df["Points"], errors="coerce")
+    df = df.dropna(subset=["Points"])
+
+    if df.empty:
+        print("⚠️ No valid samples with Points found. Cannot train model.")
+        return
 
     X = df[features].fillna(0)
     y = df["Points"]
 
-    # Scale features
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    if len(df) < 10:
+        print(f"⚠️ Only {len(df)} samples available. Too few to split/train.")
+        return
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X_scaled, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42
     )
 
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model = GradientBoostingRegressor(random_state=42)
     model.fit(X_train, y_train)
 
     preds = model.predict(X_test)
     mse = mean_squared_error(y_test, preds)
-    rmse = np.sqrt(mse)
-    print(f"✅ Model trained with scaling. RMSE: {rmse:.2f}")
+    print(f"✅ Model trained. Test MSE: {mse:.3f}")
 
-    # Save both model and scaler
-    joblib.dump(model, "artifacts/race_predictor.pkl")
-    joblib.dump(scaler, "artifacts/scaler.pkl")
-    print("💾 Model and scaler saved to artifacts/")
+    joblib.dump(model, model_out)
+    print(f"📂 Model saved to {model_out}")
 
 if __name__ == "__main__":
-    main()
+    train_model()
