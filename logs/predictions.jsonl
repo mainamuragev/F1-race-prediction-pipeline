@@ -1,0 +1,3 @@
+{"timestamp": "2026-04-29T15:40:08.021799", "features": {"driver_form_last5": 5059.5, "constructor_form_last5": 29.0, "grid_form_last5": 4.0, "pit_form_last5": 4.4, "lap_consistency_last5": 19690.92}, "prediction": 5059.5}
+{"timestamp": "2026-04-29T15:41:47.442443", "features": {"driver_form_last5": 5059.5, "constructor_form_last5": 29.0, "grid_form_last5": 4.0, "pit_form_last5": 4.4, "lap_consistency_last5": 19690.92}, "prediction": 5059.5}
+{"timestamp": "2026-04-29T15:45:36.498988", "features": {"driver_form_last5": 5059.5, "constructor_form_last5": 29.0, "grid_form_last5": 4.0, "pit_form_last5": 4.4, "lap_consistency_last5": 19690.92}, "prediction": 5059.5, "response_time_ms": 45.25}
