@@ -9,7 +9,7 @@
 
 <div align="center">
 
-🏎️ **An intelligent Formula 1 race outcome predictor** 🏎️
+ **An intelligent Formula 1 race outcome predictor** 
 
 *Leverages historical performance, driver form, and constructor strength to forecast race results*
 
@@ -22,7 +22,7 @@
 
 ---
 
-## 🗺️ Pipeline Architecture
+##  Pipeline Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -32,47 +32,47 @@
            ▼
 ┌──────────────────────┐     ┌──────────────────────────────────────┐
 │   STEP 1: CLEAN      │     │  Fixes                               │
-│                      │────▶│  🧹 Ergast \N null handling          │
-│  clean_data.py       │     │  🕐 Lap time string → milliseconds   │
-│                      │     │  📊 Type coercion + DNF filling      │
+│                      │────▶│   Ergast \N null handling          │
+│  clean_data.py       │     │   Lap time string → milliseconds   │
+│                      │     │   Type coercion + DNF filling      │
 └──────────┬───────────┘     └──────────────────────────────────────┘
            │
            ▼
 ┌──────────────────────┐     ┌──────────────────────────────────────┐
 │  STEP 2: FEATURES    │     │  8 Features Engineered               │
-│                      │────▶│  📈 driver_form_last5                │
-│  build_features.py   │     │  🏗️  constructor_form_last5          │
-│                      │     │  🚦 grid_form_last5                  │
-│                      │     │  ⏱️  pit_form_last5                   │
-│                      │     │  🔄 lap_consistency_last5            │
-│                      │     │  🏟️  circuit_avg_points               │
-│                      │     │  🏆 cum_season_points                │
-│                      │     │  🔢 grid (qualifying position)       │
+│                      │────▶│   driver_form_last5                │
+│  build_features.py   │     │    constructor_form_last5          │
+│                      │     │   grid_form_last5                  │
+│                      │     │    pit_form_last5                   │
+│                      │     │   lap_consistency_last5            │
+│                      │     │   circuit_avg_points               │
+│                      │     │   cum_season_points                │
+│                      │     │   grid (qualifying position)       │
 └──────────┬───────────┘     └──────────────────────────────────────┘
            │
            ▼
 ┌──────────────────────┐     ┌──────────────────────────────────────┐
 │   STEP 3: TRAIN      │     │  Model Details                       │
-│                      │────▶│  🤖 GradientBoostingRegressor        │
-│  train_model.py      │     │  📅 Time-based train/test split      │
-│                      │     │  💾 Saves model + scaler             │
-│                      │     │  📊 MAE + RMSE + feature importance  │
+│                      │────▶│   GradientBoostingRegressor        │
+│  train_model.py      │     │   Time-based train/test split      │
+│                      │     │   Saves model + scaler             │
+│                      │     │   MAE + RMSE + feature importance  │
 └──────────┬───────────┘     └──────────────────────────────────────┘
            │
            ▼
 ┌──────────────────────┐     ┌──────────────────────────────────────┐
 │  STEP 4: UPCOMING    │     │  For Next Race                       │
-│                      │────▶│  🗓️  Fetch next race from Ergast API │
-│  build_upcoming_     │     │  📐 Compute per-driver feature rows  │
-│  features.py         │     │  💾 upcoming_features.csv            │
+│                      │────▶│   Fetch next race from Ergast API │
+│  build_upcoming_     │     │   Compute per-driver feature rows  │
+│  features.py         │     │   upcoming_features.csv            │
 └──────────┬───────────┘     └──────────────────────────────────────┘
            │
            ▼
 ┌──────────────────────┐     ┌──────────────────────────────────────┐
 │   STEP 5: PREDICT    │     │  Output                              │
-│                      │────▶│  🏁 Ranked driver leaderboard        │
-│  predict_upcoming.py │     │  💾 predictions.csv                  │
-│                      │     │  🌐 FastAPI /predict/race endpoint   │
+│                      │────▶│   Ranked driver leaderboard        │
+│  predict_upcoming.py │     │   predictions.csv                  │
+│                      │     │   FastAPI /predict/race endpoint   │
 └──────────────────────┘     └──────────────────────────────────────┘
 ```
 
@@ -83,15 +83,15 @@
 ```
 f1-race-prediction-pipeline/
 │
-├── 🚀 main.py                           # Pipeline orchestrator (start here)
-├── 🌐 app.py                            # FastAPI serving layer
+├── main.py                           # Pipeline orchestrator (start here)
+├──  app.py                            # FastAPI serving layer
 │
 ├── src/
 │   ├── ingestion/
 │   │   └── fetch_data.py                # Local Kaggle dataset loader
 │   │
 │   ├── features/
-│   │   ├── ⭐ build_features.py         # Unified feature engineering
+│   │   ├── build_features.py         # Unified feature engineering
 │   │   ├── build_upcoming_features.py   # Features for next race
 │   │   ├── ingest_hybrid.py             # FastF1 + Kaggle hybrid
 │   │   ├── ingest_ergast.py             # Ergast API ingestion
@@ -116,7 +116,7 @@ f1-race-prediction-pipeline/
 
 ---
 
-## ⚡ Quickstart
+##  Quickstart
 
 ### 1. Install dependencies
 
@@ -169,7 +169,7 @@ Interactive docs → **http://localhost:8000/docs**
 
 ---
 
-## 🌐 API Endpoints
+##  API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -215,7 +215,7 @@ curl http://localhost:8000/predict/race
 
 ---
 
-## 🧠 Model Details
+## Model Details
 
 | Property | Value |
 |----------|-------|
@@ -227,7 +227,7 @@ curl http://localhost:8000/predict/race
 
 ---
 
-## 📊 Data Sources
+##  Data Sources
 
 | Source | Coverage | Used For |
 |--------|----------|----------|
@@ -239,7 +239,7 @@ curl http://localhost:8000/predict/race
 
 <div align="center">
 
-Built with ❤️ and way too much coffee ☕
+Built with  and way too much coffee 
 
 *"To finish first, first you must finish"* — Stirling Moss
 
