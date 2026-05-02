@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+# Generated data
+data/processed/
+data/raw/f1_drivers_dataset_1950_2026.csv
+artifacts/
+metrics/
+*.pkl
+*.pyc
+__pycache__/
+.cache/
